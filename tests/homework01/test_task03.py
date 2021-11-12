@@ -6,7 +6,8 @@ from homework01.task03 import find_maximum_and_minimum
 
 def before(min_value, max_value, min_range, max_range):
     raw_data = [
-        randint(min_value, max_value) for _ in range(randint(min_range, max_range))
+        randint(min_value, max_value)
+        for _ in range(randint(min_range, max_range))
     ]
     read_data = "\n".join(map(str, raw_data))
     mock_open = mock.mock_open(read_data=read_data)
