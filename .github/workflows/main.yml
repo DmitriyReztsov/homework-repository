@@ -7,7 +7,7 @@ on: push
 jobs:
   code_quality:
     runs-on: ubuntu-latest
-    name: Checks with flake8, isort and possibly run tests
+    name: Checks with black, isort and possibly run tests
     container: python:3.9
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - name: Run script
         run: |
           pip install -r ./homework01/requirements.txt
-          pip install flake8 isort pytest
+          pip install black isort pytest
           ls -la
           black --check .
           isort --profile black --check .
