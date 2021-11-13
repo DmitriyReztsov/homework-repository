@@ -12,9 +12,7 @@ from typing import List
 import numpy as np
 
 
-def check_sum_of_four(
-        a: List[int], b: List[int], c: List[int], d: List[int]
-) -> int:
+def check_sum_of_four(a: List[int], b: List[int], c: List[int], d: List[int]) -> int:
     x1, y1, z1, t1 = np.meshgrid(a, b, c, d)
     cl1 = x1 + y1 + z1 + t1
     array = np.extract(cl1 == 0, cl1)

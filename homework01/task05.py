@@ -20,7 +20,7 @@ def find_maximal_subarray_sum(nums: List[int], k: int) -> int:
     while start < len(nums):
         end = 0
         while end < k:
-            result = max(result, sum(nums[start: (start + end + 1)]))
+            result = max(result, sum(nums[start : (start + end + 1)]))
             end += 1
         start += 1
     return result

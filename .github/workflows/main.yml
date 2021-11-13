@@ -18,6 +18,6 @@ jobs:
           pip install -r ./homework01/requirements.txt
           pip install flake8 isort pytest
           ls -la
-          flake8 .
-          isort --check .
+          black --check .
+          isort --profile black --check .
           py.test tests
