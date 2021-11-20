@@ -13,10 +13,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run script
+      - name: Run check
         run: |
-          pip install flake8 isort pytest
-          ls -la
-          flake8 .
-          isort --check .
+          pip install black==21.10b0 isort==5.10.1 pytest==6.2.5
+          black --check .
+          isort --profile black --check .
           py.test tests
