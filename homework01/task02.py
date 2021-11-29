@@ -9,22 +9,28 @@ We guarantee, that the given sequence contain >= 0 integers inside.
 from typing import Sequence
 
 
+def generator_fibonacci(start=0, stop=0):
+    first = 0
+    second = 1
+    while first < start:
+        first, second = second, (first + second)
+    while first < stop:
+        yield first
+        first, second = second, (first + second)
+    yield first
+
+
 def check_fibonacci(data: Sequence[int]) -> bool:
     data_to_process = list(data)
-    assert (
-        len(data_to_process) >= 3
-    ), "The check needs at least 3 integers in sequence !"
-    a, b, c = data_to_process[0], data_to_process[1], data_to_process[2]
-
-    if a < 0 or b < 0:
+    if len(data_to_process) < 3:
+        print("The check needs at least 3 integers in sequence !")
+        return False
+    if data_to_process[0] < 0:
         return False
 
-    while len(data_to_process) >= 3:
-        if (a + b) != c:
-            return False
-
-        data_to_process = data_to_process[1:]
-        if len(data_to_process) >= 3:
-            a, b, c = b, c, data_to_process[2]
-
-    return True
+    fibonacci_list = [
+        i for i in generator_fibonacci(data_to_process[0], data_to_process[-1])
+    ]
+    if data_to_process[0] == 1 and data_to_process[1] != 1:
+        fibonacci_list.pop(0)
+    return data_to_process == fibonacci_list

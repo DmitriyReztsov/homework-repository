@@ -118,15 +118,11 @@ def test_slice_negative_start():
     assert not check_fibonacci(sequence)
 
 
-def test_3_elements():
+def test_3_elements_like_fibonacci():
     sequence = (2, 7, 9)
-    assert check_fibonacci(sequence)
+    assert check_fibonacci(sequence) is False
 
 
 def test_2_elements():
     sequence = (2, 7)
-    try:
-        check_fibonacci(sequence)
-    except AssertionError:
-        pass
-    assert AssertionError
+    assert check_fibonacci(sequence) is False

@@ -1,39 +1,27 @@
-from random import randint
 from unittest import mock
+
+import pytest
 
 from homework01.task03 import find_maximum_and_minimum
 
+test_data = [
+    ([1, 1, 3, 4, 5, 6, 7, 8], [1, 8]),
+    ([1, 1, 1, 100, 100, 101, 100], [1, 101]),
+    ([1, -1, -1, 0, 0, 0, 2, 3, 3], [-1, 3]),
+    (
+        [
+            12,
+        ],
+        [12, 12],
+    ),
+]
 
-def before(min_value, max_value, min_range, max_range):
-    raw_data = [
-        randint(min_value, max_value) for _ in range(randint(min_range, max_range))
-    ]
-    read_data = "\n".join(map(str, raw_data))
+
+@pytest.mark.parametrize("test_input, expected", test_data)
+def test_random(test_input, expected):
+    read_data = "\n".join(map(str, test_input))
     mock_open = mock.mock_open(read_data=read_data)
-    mi = min(raw_data)
-    ma = max(raw_data)
-    return mock_open, mi, ma
-
-
-def test_random():
-    mock_open, min, max = before(-100, 100, 5, 50)
 
     with mock.patch("builtins.open", mock_open):
         result = find_maximum_and_minimum("file_name")
-    assert result[0] == min and result[1] == max
-
-
-def test_same():
-    mock_open, min, max = before(100, 100, 5, 50)
-
-    with mock.patch("builtins.open", mock_open):
-        result = find_maximum_and_minimum("file_name")
-    assert result[0] == min and result[1] == max
-
-
-def test_one_value():
-    mock_open, min, max = before(100, 100, 1, 1)
-
-    with mock.patch("builtins.open", mock_open):
-        result = find_maximum_and_minimum("file_name")
-    assert result[0] == min and result[1] == max
+    assert result[0] == expected[0] and result[1] == expected[1]

@@ -7,13 +7,17 @@ Given four lists A, B, C, D of integer values,
 
 We guarantee, that all A, B, C, D have same length of N where 0 ≤ N ≤ 1000.
 """
+from collections import defaultdict
+from itertools import product
 from typing import List
-
-import numpy as np
 
 
 def check_sum_of_four(a: List[int], b: List[int], c: List[int], d: List[int]) -> int:
-    x1, y1, z1, t1 = np.meshgrid(a, b, c, d)
-    cl1 = x1 + y1 + z1 + t1
-    array = np.extract(cl1 == 0, cl1)
-    return len(array)
+    sums = defaultdict(int)
+    for pair in product(a, b):
+        sums[sum(pair)] += 1
+    counter = 0
+    for pair in product(c, d):
+        if -sum(pair) in sums:
+            counter += sums[-sum(pair)]
+    return counter

@@ -13,11 +13,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run script
+      - name: Run check
         run: |
-          pip install -r ./homework01/requirements.txt
-          pip install black isort pytest
-          ls -la
+          pip install black==21.10b0 isort==5.10.1 pytest==6.2.5
           black --check .
           isort --profile black --check .
           py.test tests
