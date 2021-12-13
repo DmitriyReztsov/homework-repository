@@ -1,5 +1,5 @@
-from hw1_utils import EasyIterType, PureType
-from hw1_utils import handle_dict as hd
+from homework07.hw1_utils import EasyIterType, PureType
+from homework07.hw1_utils import handle_dict as hd
 
 
 def handle_iter(iterable, element):

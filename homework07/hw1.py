@@ -8,7 +8,7 @@ Tree can only contains basic structures like:
 """
 from typing import Any
 
-from hw1_utils import handle_dict as hd
+from .hw1_utils import handle_dict as hd
 
 # Example tree:
 example_tree = {
