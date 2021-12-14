@@ -64,8 +64,7 @@ def parse_combinations(boards: List[List]) -> str:
 
 def tic_tac_toe_checker(board: List[List]) -> str:
     if not validate(board):
-        print("ERROR : you're playing smth else, not Tic-Tac-Toe !")
-        raise SystemError
+        raise ValueError("ERROR : you're playing smth else, not Tic-Tac-Toe !")
     board_vert = [[board[i][j] for i in range(3)] for j in range(3)]
     board_diag = [[board[i][i] for i in range(3)], [board[2 - i][i] for i in range(3)]]
     result_horizontal = parse_combinations(board)

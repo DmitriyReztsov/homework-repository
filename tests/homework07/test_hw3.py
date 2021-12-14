@@ -22,5 +22,5 @@ def test_tic_tac_toe(test_input, expected):
 
 @pytest.mark.parametrize("test_input", wrong_data)
 def test_tic_tac_toe_wrong_input(test_input):
-    with pytest.raises(SystemError):
+    with pytest.raises(ValueError):
         tic_tac_toe_checker(test_input)

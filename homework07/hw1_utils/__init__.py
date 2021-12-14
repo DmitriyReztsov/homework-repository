@@ -1,13 +1,3 @@
-from enum import Enum
+PURE_TYPE = (str, int, bool)
 
-
-class PureType(Enum):
-    STR = str
-    INT = int
-    BOOL = bool
-
-
-class EasyIterType(Enum):
-    LIST = list
-    TUPLE = tuple
-    SET = set
+EASY_ITER_TYPE = (list, tuple, set)
