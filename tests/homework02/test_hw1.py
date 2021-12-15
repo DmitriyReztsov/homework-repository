@@ -19,7 +19,7 @@ def test_get_longest_diverse_words(open_file):
 def test_get_rarest_char(open_file):
     with mock.patch("builtins.open", open_file):
         result = get_rarest_char("file_name")
-    assert result == "\u2014"
+    assert result == "u"
 
 
 def test_count_punctuation_chars(open_file):
