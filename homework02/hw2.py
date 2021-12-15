@@ -17,10 +17,9 @@ Input: [2,2,1,1,1,2,2]
 Output: 2, 1
 
 """
+from collections import Counter
 from typing import List, Tuple
 
 
 def major_and_minor_elem(inp: List) -> Tuple[int, int]:
-    values = set(inp)
-    dict = {value: inp.count(value) for value in values}
-    return sorted(dict, key=dict.get)[-1], sorted(dict, key=dict.get)[0]
+    return (Counter(inp).most_common()[0][0], Counter(inp).most_common()[-1][0])

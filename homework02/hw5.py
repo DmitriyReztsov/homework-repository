@@ -17,6 +17,8 @@ assert = custom_range(string.ascii_lowercase, 'p', 'g', -2) == ['p', 'n', 'l', '
 
 
 class CustomError(Exception):
+    """raise in case of wromg data according to custom logic"""
+
     def __init__(self, data):
         self.data = data
 
@@ -59,7 +61,7 @@ def validate_data(iterable, *args):
     try:
         if start and not start in iterable:
             raise CustomError("Start is not in range !")
-        if not stop in iterable:
+        if stop not in iterable:
             raise CustomError("Stop is not in range !")
         if not isinstance(step, int):
             raise CustomError(
@@ -100,7 +102,7 @@ def custom_range(iterable, *args):
             stop_activated = True
         if value == start:
             start_activated = True
-        if i % step == 0 and start_activated == True and stop_activated == False:
+        if i % step == 0 and start_activated is True and stop_activated is False:
             if not isinstance(iterable, dict):
                 result.append(value)
             else:
