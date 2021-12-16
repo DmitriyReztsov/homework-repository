@@ -131,15 +131,12 @@ class HomeworkResult:
     """
 
     def __init__(self, student: Student, homework: Homework, solution: str):
+        if not isinstance(homework, Homework):
+            raise ValueError("You gave a not Homework object")
         self.student = student
         self.homework = homework
         self.solution = solution
         self.created = datetime.datetime.now()
-        for key in self.__init__.__annotations__:
-            if not isinstance(self.__dict__[key], self.__init__.__annotations__[key]):
-                raise ValueError(
-                    f"WHAT??? Your <{self.__dict__[key]}> should be type of <{self.__init__.__annotations__[key]}>"
-                )
 
 
 if __name__ == "__main__":
