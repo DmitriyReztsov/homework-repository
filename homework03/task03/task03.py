@@ -25,17 +25,15 @@ def make_filter(**keywords):
     """
     filter_funcs = []
 
-    for key, kwarg_value in keywords.items():
+    for key, value in keywords.items():
 
-        def keyword_filter_func(value):
-            """Should take key and kwarg_values from nonlocal scope into scope of the function
+        def keyword_filter_func(item):
+            """Should take key and values from nonlocal scope into scope of the function
             to operate with correct data.
 
             """
-            nonlocal key
-            nonlocal kwarg_value
-            if key in value.keys():
-                return value[key] == kwarg_value
+            if key in item.keys():
+                return item[key] == value
             return False
 
         filter_funcs.append(keyword_filter_func)
