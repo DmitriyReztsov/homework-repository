@@ -14,6 +14,6 @@ def slow_calculate(value):
 
 def speedy_calculator(to_range: int) -> int:
     numbers = [x for x in range(to_range)]
-    pool = Pool(processes=to_range)
-    result_array = pool.map_async(slow_calculate, numbers).get()
+    with Pool(processes=to_range) as pool:
+        result_array = pool.map_async(slow_calculate, numbers).get()
     return sum(result_array)

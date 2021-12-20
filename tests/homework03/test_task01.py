@@ -1,14 +1,14 @@
 from homework03.task01.task01 import cache
 
-GLOBAL = 0
-
 
 def test_cache():
+    calls_counter = 0
+
     @cache(times=2)
     def func(a, b):
-        global GLOBAL
-        GLOBAL += 1
-        return a + b + GLOBAL
+        nonlocal calls_counter
+        calls_counter += 1
+        return a + b + calls_counter
 
     assert func(12, b=2) == 15
     assert func(12, b=2) == 15

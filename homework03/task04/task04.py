@@ -22,22 +22,9 @@ in functionaly style:
 
 def is_armstrong(number: int) -> bool:
     if number > 0:
-        digits = len(str(number))
-        list = [
-            ((number // (10 ** i) - (number // (10 ** (i + 1)) * 10))) ** digits
-            for i in range(digits)
-        ]
-        return sum(list) == number
-    return False
-
-
-def is_armstrong_2(number: int) -> bool:
-    if number > 0:
-        digits = [int(d) for d in str(number)]
-        powered_digits = list(map(lambda _: _ ** len(digits), digits))
+        digits_list = [int(d) for d in str(number)]
+        powered_digits = list(
+            map(lambda single_digit: single_digit ** len(digits_list), digits_list)
+        )
         return sum(powered_digits) == number
     return False
-
-
-assert is_armstrong(153) is True, "Is Armstrong number"
-assert is_armstrong(10) is False, "Is not Armstrong number"

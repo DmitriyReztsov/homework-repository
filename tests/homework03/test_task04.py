@@ -1,6 +1,6 @@
 import pytest
 
-from homework03.task04.task04 import is_armstrong, is_armstrong_2
+from homework03.task04.task04 import is_armstrong
 
 test_data = [
     (1, True),
@@ -31,4 +31,3 @@ test_data = [
 @pytest.mark.parametrize("test_input, expected", test_data)
 def test_armstrong(test_input, expected):
     assert is_armstrong(test_input) == expected
-    assert is_armstrong_2(test_input) == expected
