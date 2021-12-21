@@ -25,8 +25,14 @@ test_data = [
 
 
 @pytest.mark.parametrize("test_input, expected", test_data)
-def test_counter(test_input, expected):
+def test_counter_without_tokeniser(test_input, expected):
     with create_files(test_input):
         path_to_tests = os.path.abspath("tests/homework09/")
         assert universal_file_counter(path_to_tests, ".txt") == expected[0]
+
+
+@pytest.mark.parametrize("test_input, expected", test_data)
+def test_counter_with_tokeniser(test_input, expected):
+    with create_files(test_input):
+        path_to_tests = os.path.abspath("tests/homework09/")
         assert universal_file_counter(path_to_tests, ".txt", str.split) == expected[1]

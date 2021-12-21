@@ -14,7 +14,6 @@ file2.txt:
 >>> list(merge_sorted_files(["file1.txt", "file2.txt"]))
 [1, 2, 3, 4, 5, 6]
 """
-import itertools
 
 
 class CustomIterator:
@@ -32,22 +31,30 @@ class CustomIterator:
         raise StopIteration
 
 
-def validate_data(input_data):
-    for entry in input_data:
-        try:
-            int(entry)
-        except ValueError:
-            raise ValueError("Check you data: no chars, no empty lines, no spaces")
+def merge_sort(array_1, array_2):
+    sorted_array = []
+    index_1 = 0
+    index_2 = 0
+    while index_1 < len(array_1) and index_2 < len(array_2):
+        if int(array_1[index_1]) < int(array_2[index_2]):
+            insert_element = int(array_1[index_1])
+            index_1 += 1
+        elif int(array_1[index_1]) >= int(array_2[index_2]):
+            insert_element = int(array_2[index_2])
+            index_2 += 1
+        sorted_array.append(insert_element)
+    if index_1 < len(array_1):
+        sorted_array.extend(array_1[index_1:])
+    elif index_2 < len(array_2):
+        sorted_array.extend(array_2[index_2:])
+    return sorted_array
 
 
 def merge_sorted_files(file_list):
     data_row = []
     for file in file_list:
         with open(file) as data_file:
-            data_from_file = data_file.read().split("\n")
-            validate_data(data_from_file)
-            data_row.append(data_from_file)
-    data_row_joined = list(itertools.chain.from_iterable(data_row))
-    data_row_int = list(map(int, data_row_joined))
-    data_row_int.sort()
+            data_from_file = data_file.readlines()
+            data_row = merge_sort(data_row, data_from_file)
+    data_row_int = list(map(int, data_row))
     return CustomIterator(data_row_int)
