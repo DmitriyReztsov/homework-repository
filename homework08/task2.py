@@ -43,7 +43,7 @@ class TableData:
             data = cursor.fetchall()
         return bool(data)
 
-    def generator(self):
+    def __generator(self):
         with open_db(self.database) as cursor:
             cursor.execute(f"SELECT * FROM {self.table}")
             column_names = [description[0] for description in cursor.description]
@@ -52,7 +52,7 @@ class TableData:
                 yield data_dict
 
     def __iter__(self):
-        return self.generator()
+        return self.__generator()
 
     @staticmethod
     def validate_input(database, table):
