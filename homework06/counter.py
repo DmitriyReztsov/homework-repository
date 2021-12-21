@@ -11,21 +11,31 @@ reset_instances_counter - сбросить счетчик экземпляров
 
 
 def instances_counter(cls):
-    """Some code"""
+    """
+    Wrapper, which can be applied to any class and adds two methods to the class:
+    :py:func:`get_created_instances` - returns quantity of instances createed,
+    :py:func:`reset_instances_counter` - returns value before reset and resets counter
+
+    :param cls: class
+    :type cls: Any
+    :return: Number of created objects of the class.
+    :rtype: int
+
+    """
     cls.counter = 0
     origin_init = cls.__init__
 
     @classmethod
-    def get_created_instances(cls):
+    def get_created_instances(cls) -> int:
         return cls.counter
 
     @classmethod
-    def reset_instances_counter(cls):
+    def reset_instances_counter(cls) -> int:
         ret = cls.counter
         cls.counter = 0
         return ret
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         cls.counter += 1
         origin_init(self, *args, **kwargs)
 

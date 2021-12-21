@@ -58,35 +58,50 @@ class DeadlineError(Exception):
 
 
 class Human:
-    def __init__(self, first_name, last_name):
+    """
+    Base class for instances, presented a man.
+
+    :param first_name: first name of a man.
+    :type first_name: str.
+    :param last_name: lat name of a man.
+    :type last_name: str.
+
+    """
+
+    def __init__(self, first_name: str, last_name: str):
         self.first_name = first_name
         self.last_name = last_name
 
 
 class Student(Human):
-    def do_homework(self, homework, result):
+    def do_homework(self, homework: "Homework", result: str) -> "HomeworkResult":
+        """
+        Method checks if a student is in time to present the result.
+        If the date of deadline is over DeadlineError with message 'You are late'
+        raises.
+
+        :raise oop_2.DeadlineError: If current date is bigger than date of daedline.
+
+        """
         if homework.is_active:
             return HomeworkResult(self, homework, result)
         raise DeadlineError("You are late")
 
 
 class Teacher(Human):
-    """структура с интерфейсом как в словаря, сюда поподают все
-    HomeworkResult после успешного прохождения check_homework
-    (нужно гаранитровать остутствие повторяющихся результатов по каждому
-    заданию), группировать по экземплярам Homework.
-    Общий для всех учителей.
-
-    """
-
     homework_done = defaultdict(list)
+    # структура с интерфейсом как в словаря, сюда поподают все
+    # HomeworkResult после успешного прохождения check_homework
+    # (нужно гаранитровать остутствие повторяющихся результатов по каждому
+    # заданию), группировать по экземплярам Homework.
+    # Общий для всех учителей.
 
     @classmethod
-    def check_homework(cls, hw_result):
-        """принимает экземпляр HomeworkResult и возвращает True если
-        ответ студента больше 5 символов, так же при успешной проверке добавить
-        в homework_done.
-        Если меньше 5 символов - никуда не добавлять и вернуть False.
+    def check_homework(cls, hw_result: "HomeworkResult") -> bool:
+        """
+        Accepts inctanse of HomeworkResult and returns True if answer
+        contains more than 5 characters, adds the instance into homework_done as well.
+        Overwise - just returns False.
 
         """
         if len(hw_result.solution) > 5:
@@ -96,37 +111,59 @@ class Teacher(Human):
         return False
 
     @classmethod
-    def reset_results(cls, homework=None):
-        """если передать экземпряр Homework - удаляет только
-        результаты этого задания из homework_done, если ничего не передавать,
-        то полностью обнулит homework_done.
+    def reset_results(cls, homework: "Homework" = None):
+        """
+        Removes instance of Homework from the homework_done dict if the inctanse
+        passed. Clears the dict overwise.
+
+        :param homework: homework should be removed.
+        :type homework: oop_2.Homework or None.
 
         """
-
         if not homework:
             cls.homework_done.clear()
         else:
             cls.homework_done.pop(homework)
 
     @staticmethod
-    def create_homework(text, deadline):
+    def create_homework(text: str, deadline: datetime):
+        """
+        Creates instance of Homework class.
+
+        """
         return Homework(text, deadline)
 
 
 class Homework:
-    def __init__(self, text, deadline):
+    """
+    Class presented instancrs of homeworks.
+    :param deadline: numbers of days fron creation date.
+    :type kind: int.
+
+    """
+
+    def __init__(self, text: str, deadline: int):
         self.text = text
         self.deadline = datetime.timedelta(deadline)
         self.created = datetime.datetime.now()
 
     @property
-    def is_active(self):
+    def is_active(self) -> bool:
+        """
+        Returns True if current date is still lower than creation date added to deadline.
+
+        """
         return (self.created + self.deadline) > datetime.datetime.now()
 
 
 class HomeworkResult:
-    """HomeworkResult принимает объект автора задания, принимает исходное задание
-    и его решение в виде строки
+    """
+    Accepts instance of Student as an author of solution, instance of Homework
+    done by author and solution itself as a string.
+    Valuates homework - it should be Homework instance only. Overwise ValueError
+    raises.
+
+    :raise ValueError: If homework is not Homework instance.
 
     """
 
