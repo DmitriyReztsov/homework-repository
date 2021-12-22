@@ -8,7 +8,7 @@ test_data = [
     (["name", "kek"], str),
     (["last_name", "top"], str),
     (["power", 9001], int),
-    (["song", 1001], int),
+    (["power_2", 1001], int),
 ]
 
 
@@ -24,3 +24,10 @@ def test_key_value_err(open_file_err):
     with pytest.raises(ValueError):
         with mock.patch("builtins.open", open_file_err):
             storage = KeyValueStorage("file_name")
+
+
+def test_key_value_err_dir(open_file_err_dir):
+    with pytest.raises(NameError):
+        with mock.patch("builtins.open", open_file_err_dir):
+            storage = KeyValueStorage("file_name")
+            try_get = storage[__dict__]

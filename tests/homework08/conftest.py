@@ -4,7 +4,7 @@ from unittest import mock
 
 from pytest import fixture
 
-TEXT_1 = "name=kek\n" "last_name=top\n" "power=9001\n" "song=1001\n"
+TEXT_1 = "name=kek\n" "last_name=top\n" "power=9001\n" "power_2=1001\n"
 
 TEST_DB_DATA = [
     ("1", "Ivan", "18", "Moscow", "sunny"),
@@ -24,6 +24,12 @@ def open_file():
 @fixture()
 def open_file_err():
     read_data = "1=TEXT_1"
+    return mock.mock_open(read_data=read_data)
+
+
+@fixture()
+def open_file_err_dir():
+    read_data = "__dict__=TEXT_1"
     return mock.mock_open(read_data=read_data)
 
 

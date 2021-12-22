@@ -6,7 +6,10 @@ class KeyValueStorage:
                 if "=" not in line:
                     continue
                 key, value = KeyValueStorage.validate_line(*line.split("="))
-                self.__dict__[key] = value
+                if key not in dir(self):
+                    self.__dict__[key] = value
+                else:
+                    continue
                 line = file_storage.readline()
 
     def __getitem__(self, key):
