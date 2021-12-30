@@ -174,10 +174,7 @@ def none_vs_int(i, reverse=False):
     return i
 
 
-def main():
-    main_url = "https://markets.businessinsider.com/index/components/s&p_500"
-    usd_url = "http://www.cbr.ru/scripts/XML_daily.asp"
-
+def main(main_url, usd_url):
     usd, total_pages = asyncio.run(usd_n_pages(usd_url, main_url))
 
     asyncio.run(gather_data_from_site(main_url, total_pages))
@@ -224,4 +221,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main_url = "https://markets.businessinsider.com/index/components/s&p_500"
+    usd_url = "http://www.cbr.ru/scripts/XML_daily.asp"
+    main(main_url, usd_url)
