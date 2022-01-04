@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.db import models
-
 from hw12.my_errors import DeadlineError
 
 
