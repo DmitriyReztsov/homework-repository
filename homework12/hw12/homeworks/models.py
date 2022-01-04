@@ -1,9 +1,8 @@
 import datetime
 
 from django.db import models
-
-from errors.errors import DeadlineError
 from humans.models import Student, Teacher
+from hw12.my_errors import DeadlineError
 
 
 class Homework(models.Model):

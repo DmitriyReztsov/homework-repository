@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 
-from errors.errors import DeadlineError
+from hw12.my_errors import DeadlineError
 
 
 class Human(models.Model):
