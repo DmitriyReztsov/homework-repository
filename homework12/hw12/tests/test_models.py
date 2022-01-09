@@ -60,7 +60,7 @@ class HomeworkModelTest(TestCase):
 
         hw_done = teacher.check_homework(hw_result=hw_result)
         self.assertTrue(hw_done)
-        self.assertEquals(hw_done.homework_done, hw_result)
+        self.assertTrue(HomeworkDone.objects.filter(homework_done=hw_result).exists())
 
     def test_expired_hw(self):
         teacher = HomeworkModelTest.teacher
