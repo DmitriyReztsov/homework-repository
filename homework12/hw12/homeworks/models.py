@@ -14,11 +14,7 @@ class Homework(models.Model):
     text = models.TextField()
     deadline = models.DurationField()
     created_by = models.ForeignKey(
-        Teacher,
-        on_delete=models.CASCADE,
-        related_name="homework",
-        null=True,
-        blank=True,
+        Teacher, on_delete=models.CASCADE, related_name="homework"
     )
     created = models.DateTimeField(auto_now=True)
 
@@ -59,9 +55,9 @@ class HomeworkResult(models.Model):
 
 class HomeworkDone(models.Model):
     """
-    HomeworkResult после успешного прохождения check_homework
-    (нужно гарантировать остутствие повторяющихся результатов по каждому
-    заданию), группировать по экземплярам Homework.
+    Модель для хранения HomeworkResult после успешного прохождения check_homework
+    (гарантировано остутствие повторяющихся результатов по каждому
+    заданию).
     Общий для всех учителей.
 
     """

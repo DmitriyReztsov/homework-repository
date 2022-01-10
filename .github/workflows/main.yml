@@ -19,5 +19,4 @@ jobs:
           black --check .
           isort --profile black --check .
           py.test tests --doctest-modules
-          cd homework12/hw12
-          python manage.py test
+          python homework12/hw12/manage.py test
