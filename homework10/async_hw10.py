@@ -19,8 +19,6 @@ async def get_exchange_rate(session, url):
             .replace(",", ".")
         )
 
-        print(">>> get exchange rate")
-
         return round(float(exchange_rate), 2)
 
 
@@ -36,13 +34,11 @@ async def get_paginator(session, url):
             current_page = int(page.text.strip()) if page.text.strip() != "" else 0
             total_pages = current_page if current_page > total_pages else total_pages
 
-        print(">>> get pages")
-
         return total_pages
 
 
 async def usd_n_pages(url_usd, url_pages):
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(raise_for_status=True) as session:
         tasks = [
             asyncio.create_task(get_exchange_rate(session, url_usd)),
             asyncio.create_task(get_paginator(session, url_pages)),
@@ -83,8 +79,6 @@ async def page_parcing(session, main_url, page):
                 "annual_growth_percent": annual_growth_percent,
             }
             chart_500[title] = company_dict
-
-        print(f">>> parcing {page}")
 
 
 async def company_page_parcing(session, name, url, usd):
@@ -138,13 +132,11 @@ async def company_page_parcing(session, name, url, usd):
 
         chart_500[name].update(result)
 
-        print(f">>> parcing {name}")
-
 
 async def gather_data_from_site(url, total_pages):
     """Формировать необходимый список задач."""
 
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(raise_for_status=True) as session:
         tasks = []
 
         for page in range(1, total_pages + 1):
@@ -155,7 +147,7 @@ async def gather_data_from_site(url, total_pages):
 
 
 async def gather_data_from_companies(usd):
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(raise_for_status=True) as session:
         tasks = []
 
         for name, value in chart_500.items():
@@ -166,19 +158,13 @@ async def gather_data_from_companies(usd):
         await asyncio.gather(*tasks)
 
 
-def none_vs_int(i, reverse=False):
-    if i is None and not reverse:
-        return float("inf")
-    elif i is None and reverse:
-        return float("-inf")
-    return i
-
-
-def main(main_url, usd_url):
-    usd, total_pages = asyncio.run(usd_n_pages(usd_url, main_url))
-
-    asyncio.run(gather_data_from_site(main_url, total_pages))
-    asyncio.run(gather_data_from_companies(usd))
+def make_jsons():
+    def none_vs_int(i, reverse=False):
+        if i is None and not reverse:
+            return float("inf")
+        elif i is None and reverse:
+            return float("-inf")
+        return i
 
     # 1. Топ 10 компаний с самими дорогими акциями в рублях.
     with open(os.path.abspath("homework10/current_price_RUR.json"), "w") as file:
@@ -223,4 +209,9 @@ def main(main_url, usd_url):
 if __name__ == "__main__":
     main_url = "https://markets.businessinsider.com/index/components/s&p_500"
     usd_url = "http://www.cbr.ru/scripts/XML_daily.asp"
-    main(main_url, usd_url)
+    usd, total_pages = asyncio.run(usd_n_pages(usd_url, main_url))
+
+    asyncio.run(gather_data_from_site(main_url, total_pages))
+    asyncio.run(gather_data_from_companies(usd))
+
+    make_jsons()
