@@ -1,3 +1,6 @@
+aiohttp==3.8.1
+asyncio==3.4.3
+beautifulsoup4==4.10.0
 black==21.10b0
 Django==3.2
 isort==5.10.1
